@@ -26,20 +26,23 @@ jobs:
         with:
           version: 9
 
-      - name: Setup MSBuild
+      - name: Setup MSBuild and .NET Framework
         uses: microsoft/setup-msbuild@v2
+
+      - name: Setup NuGet
+        uses: NuGet/setup-nuget@v2
 
       - name: Run Build Script
         shell: pwsh
         run: |
-          $args = @('-Configuration', 'Release')
           if ("${{ github.event.inputs.enable_notifications }}" -eq "true") {
-            $args += '-EnableUpdateNotifications'
+            .\build.ps1 -Configuration Release -EnableUpdateNotifications
+          } else {
+            .\build.ps1 -Configuration Release
           }
-          .\build.ps1 @args
 
       - name: Upload Artifact
         uses: actions/upload-artifact@v4
         with:
           name: WandEnhancer-Release
-          path: WandEnhancer/bin/Release/WandEnhancer.exe
+          path: WandEnhancer/bin/Release/
