@@ -16,7 +16,7 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v4
 
-      - name: Setup Node.js
+      - name: Setup Node.js 22
         uses: actions/setup-node@v4
         with:
           node-version: 22
@@ -26,11 +26,8 @@ jobs:
         with:
           version: 9
 
-      - name: Setup MSBuild and .NET Framework
+      - name: Setup MSBuild
         uses: microsoft/setup-msbuild@v2
-
-      - name: Setup NuGet
-        uses: NuGet/setup-nuget@v2
 
       - name: Run Build Script
         shell: pwsh
